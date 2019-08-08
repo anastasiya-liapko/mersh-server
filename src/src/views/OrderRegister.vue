@@ -334,15 +334,26 @@ export default {
       var context = this
 
       var array = {
+        'id': parseInt(this.orderNumber),
         'name': this.data.name,
         'phone': this.data.phone,
         'email': this.data.email,
         'address': this.data.address,
         'msg': this.data.message,
         'payment_type': this.data.payment_type,
-        'delivery_type': this.data.delivery,
+        'delivery_type': this.data.deliveryId,
         'products': this.order
       }
+
+      // console.log(Array.isArray(this.order))
+      // console.log(array)
+
+      // axios.post(context.domen + '/api/order/', array)
+      // .then(res => {
+      //   console.log(res)
+      // })
+      // .catch(error => console.log(error))
+
 
       var order = JSON.stringify(context.order)
       console.log(order)
@@ -367,9 +378,6 @@ export default {
         .catch(function (error) {
           console.log(error)
           context.showMessage(0)
-
-          // for test
-          // self.$router.push({ name: 'order-accept' })
         })
     },
     onCaptchaExpired () {

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.940993f385b9db733feada7ee004a820.js"
+  "/precache-manifest.5590f3cb6e6ec2ae8f5d7342f3561af3.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "mersh"});
