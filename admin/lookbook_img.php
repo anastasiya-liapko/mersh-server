@@ -613,6 +613,7 @@ $next_order['is_visible']='asc';
 									$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($img['name']).$ext;
 									if(move_uploaded_file($img['tmp_name'], $target_file))
 	                {
+										compressImage($target_file);
 									    $img = "/uploads/".$tm."_".md5($img['name']).$ext;
 	                }
 	                else
@@ -684,6 +685,7 @@ $is_visible = $_REQUEST['is_visible'];
 										$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($img['name']).$ext;
 										if(move_uploaded_file($img['tmp_name'], $target_file))
 		                {
+											compressImage($target_file);
 										    $set[] = "`img`='".("/uploads/".$tm."_".md5($img['name'])).$ext."'";
 		                }
 		                else

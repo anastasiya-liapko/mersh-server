@@ -356,4 +356,6 @@
 
 	$project_tint = '#D38D69'; 
 
-	$generation_date = '2019-08-07'; 
+	$tinypng_key = ''; 
+
+	$generation_date = '2019-08-09'; 

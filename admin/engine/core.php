@@ -14,6 +14,43 @@ session_start();
 
 header('Content-type: text/html; charset=utf-8');
 
+function compressImage($img_path)
+{
+	include __DIR__."/../menu.php";
+	if(isset($tinypng_key) && $tinypng_key!="")
+	{
+		$ch = curl_init($host);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml', $additionalHeaders));
+		curl_setopt($ch, CURLOPT_USERPWD, "api:" . $tinypng_key);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($img_path));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_URL, "https://api.tinify.com/shrink");
+
+
+
+		$data = curl_exec($ch);
+
+		$jobj = json_decode($data, true);
+
+		$url = $jobj['output']['url'];
+		$contents = file_get_contents($url);
+		if(strlen($contents)>100)
+		{
+			file_put_contents($img_path, $contents);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	return false;
+
+}
+
 function isset2($var)
 {
 		return isset($var) && $var!="";

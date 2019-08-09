@@ -32,7 +32,10 @@
 	$action = $_REQUEST['action'];
 	$actions = [];
 
-	
+	//вызывается после вставки. В патаметр id вставленной строки. Вызывается только в случае успешной вставки
+function afterInsert($last_id)
+{
+}
 
 	define("RPP", 50); //кол-во строк на странице
 
@@ -95,7 +98,13 @@
 	$actions[''] = function()
 	{
 			
-   		
+   		$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
+			$display_in_menu_values_text = "";
+			foreach(json_decode($display_in_menu_values, true) as $opt)
+			{
+			  $display_in_menu_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+			}
+				  
 
 		list($items, $pagination, $cnt) = get_data();
 
@@ -106,6 +115,7 @@ $next_order['name']='asc';
 $next_order['txt']='asc';
 $next_order['img']='asc';
 $next_order['cnt']='asc';
+$next_order['display_in_menu']='asc';
 
 		if($_REQUEST['sort_order']=='asc')
 		{
@@ -170,7 +180,7 @@ $next_order['cnt']='asc';
 							<h5 class="modal-title">Массовое добавление записей</h5>
 						</div>
 						<div class="modal-body">
-							<small>Вставьте сюда новые записи. Каждая запись на новой строчке: <b class="csv-create-format">ID, Название, Описание, Изображение</b></small>
+							<small>Вставьте сюда новые записи. Каждая запись на новой строчке: <b class="csv-create-format">ID, Название, Описание, Изображение, Отображать в меню</b></small>
 							<textarea name="csv"></textarea>
 						</div>
 						<div class="modal-footer">
@@ -229,6 +239,26 @@ $next_order['cnt']='asc';
 
 			<div class="genesis-header-property">
 				   <a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=cnt&sort_order='. ($next_order['cnt']) .'\' class=\'sort\' column=\'cnt\' sort_order=\''.$sort_order['cnt'].'\'>Товаров'. $sort_icon['cnt'].'</a>
+			</div>
+
+			<div class="genesis-header-property">
+				<nobr>
+					<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>Отображать в меню'. $sort_icon['display_in_menu'].'</a>
+					
+			<span class=\'fa fa-filter filter btn btn-default\' data-placement=\'bottom\' data-content=\'<div class="input-group">
+							<select class="form-control filter-select" name="display_in_menu_filter">
+
+
+							'.str_replace(chr(39), '&#39;', $display_in_menu_values_text).'
+
+
+							</select>
+							<span class="input-group-btn">
+								<button class="btn btn-primary add-filter" type="button"><span class="fa fa-filter"></a></button>
+							</span>
+						</div>\'>
+			</span>
+				</nobr>
 			</div>
 					<div class="genesis-header-property"></div>
 				</div>
@@ -310,6 +340,41 @@ $next_order['cnt']='asc';
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=cnt&sort_order='. ($next_order['cnt']) .'\' class=\'sort\' column=\'cnt\' sort_order=\''.$sort_order['cnt'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['cnt'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Товаров:</span>
 		</span>".htmlspecialchars($item['cnt'])."</div>")."
+".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
+		<span class='genesis-attached-column-info'>
+			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['display_in_menu'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
+			<span class='fa fa-filter filter ' data-placement='bottom' data-content='<div class=\"input-group\">
+							<select class=\"form-control filter-select\" name=\"display_in_menu_filter\">
+
+
+							".str_replace(chr(39), '&#39;', $display_in_menu_values_text)."
+
+
+							</select>
+							<span class=\"input-group-btn\">
+								<button class=\"btn btn-primary add-filter\" type=\"button\"><span class=\"fa fa-filter\"></a></button>
+							</span>
+						</div>'>
+			</span></span>
+			<span class='genesis-attached-column-name'>Отображать в меню:</span>
+		</span> <span class=''>".renderRadioGroup("display_in_menu", $display_in_menu_values, "collections", $item['id'], $item['display_in_menu'])."</div>", $item, "Отображать в меню"):"<div class='genesis-item-property '>
+		<span class='genesis-attached-column-info'>
+			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['display_in_menu'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
+			<span class='fa fa-filter filter ' data-placement='bottom' data-content='<div class=\"input-group\">
+							<select class=\"form-control filter-select\" name=\"display_in_menu_filter\">
+
+
+							".str_replace(chr(39), '&#39;', $display_in_menu_values_text)."
+
+
+							</select>
+							<span class=\"input-group-btn\">
+								<button class=\"btn btn-primary add-filter\" type=\"button\"><span class=\"fa fa-filter\"></a></button>
+							</span>
+						</div>'>
+			</span></span>
+			<span class='genesis-attached-column-name'>Отображать в меню:</span>
+		</span> <span class=''>".renderRadioGroup("display_in_menu", $display_in_menu_values, "collections", $item['id'], $item['display_in_menu'])."</div>")."
 					<div class='genesis-control-cell'><a href='#' class='edit_btn'><i class='fa fa-edit' style='color:grey;'></i></a> <a href='#' class='delete_btn'><i class='fa fa-trash' style='color:red;'></i></a></div>
 				</div>";
 
@@ -363,7 +428,7 @@ $next_order['cnt']='asc';
 			$item = $item[0];
 		}
 
-		
+		$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
 
 		$html = '
 			<form class="form" enctype="multipart/form-data" method="POST">
@@ -416,6 +481,16 @@ $next_order['cnt']='asc';
 						</div>
 
 					
+
+
+
+            <div class="form-group">
+              <label class="control-label" for="textinput">Отображать в меню</label>
+              <div class="" >'.renderEditRadioGroup("display_in_menu", $display_in_menu_values, $item["display_in_menu"]).'
+              </div>
+            </div>
+
+          
 					<div class="text-center not-editable">
 						
 					</div>
@@ -435,7 +510,7 @@ $next_order['cnt']='asc';
 	$actions['create'] = function()
 	{
 
-		
+		$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
 
 		$html = '
 			<form class="form" enctype="multipart/form-data" method="POST">
@@ -481,6 +556,16 @@ $next_order['cnt']='asc';
 						</div>
 
 					
+
+
+
+            <div class="form-group">
+              <label class="control-label" for="textinput">Отображать в меню</label>
+              <div class="" >'.renderEditRadioGroup("display_in_menu", $display_in_menu_values, $item["display_in_menu"]).'
+              </div>
+            </div>
+
+          
 					<div class="text-center not-editable">
 						
 					</div>
@@ -510,7 +595,7 @@ $next_order['cnt']='asc';
 			die("Ошибка. Редактирование несуществующей записи (вы не указали id)");
 		}
 
-		
+		$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
 
 
 		$html = '
@@ -567,6 +652,16 @@ $next_order['cnt']='asc';
 
 					
 
+
+
+            <div class="form-group">
+              <label class="control-label" for="textinput">Отображать в меню</label>
+              <div class="" >'.renderEditRadioGroup("display_in_menu", $display_in_menu_values, $item["display_in_menu"]).'
+              </div>
+            </div>
+
+          
+
 				</fieldset>
 				<div>
 					<a href="?'.(http_build_query(array_filter($_REQUEST, function($k){return !in_array($k, ['action', 'genesis_edit_id']);}, ARRAY_FILTER_USE_KEY))).'" class="btn cancel" >Закрыть</a>
@@ -609,7 +704,7 @@ $next_order['cnt']='asc';
 		}
 
 
-		$sql = "INSERT IGNORE INTO collections (`name`, `txt`, `img`) VALUES (?, ?, ?)";
+		$sql = "INSERT IGNORE INTO collections (`name`, `txt`, `img`, `display_in_menu`) VALUES (?, ?, ?, ?)";
 
 		$lines = preg_split("/\r\n|\n|\r/", $_REQUEST['csv']);
 		$success_count = 0;
@@ -617,7 +712,7 @@ $next_order['cnt']='asc';
 		foreach($lines as $line)
 		{
 			$line = str_getcsv($line);
-			qi($sql, [trim($line[0]), trim($line[1]), trim($line[2]), trim($line[3])]);
+			qi($sql, [trim($line[0]), trim($line[1]), trim($line[2]), trim($line[3]), trim($line[4])]);
 			$last_id = qInsertId();
 			if($last_id && $last_id>0)
 			{
@@ -679,6 +774,7 @@ $txt = $_REQUEST['txt'];
 									$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($img['name']).$ext;
 									if(move_uploaded_file($img['tmp_name'], $target_file))
 	                {
+										compressImage($target_file);
 									    $img = "/uploads/".$tm."_".md5($img['name']).$ext;
 	                }
 	                else
@@ -694,9 +790,10 @@ $txt = $_REQUEST['txt'];
 
 
 								
+$display_in_menu = $_REQUEST['display_in_menu'];
 
-		$params = [$name, $txt, $img];
-		$sql = "INSERT INTO collections (`name`, `txt`, `img`) VALUES (?, ?, ?)";
+		$params = [$name, $txt, $img, $display_in_menu];
+		$sql = "INSERT INTO collections (`name`, `txt`, `img`, `display_in_menu`) VALUES (?, ?, ?, ?)";
 		if(function_exists("processInsertQuery"))
 		{
 			list($sql, $params) = processInsertQuery($sql, $params);
@@ -751,6 +848,7 @@ $set[] = is_null($_REQUEST['txt'])?"`txt`=NULL":"`txt`='".addslashes($_REQUEST['
 										$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($img['name']).$ext;
 										if(move_uploaded_file($img['tmp_name'], $target_file))
 		                {
+											compressImage($target_file);
 										    $set[] = "`img`='".("/uploads/".$tm."_".md5($img['name'])).$ext."'";
 		                }
 		                else
@@ -764,6 +862,7 @@ $set[] = is_null($_REQUEST['txt'])?"`txt`=NULL":"`txt`='".addslashes($_REQUEST['
 		              }
 
 									
+$set[] = is_null($_REQUEST['display_in_menu'])?"`display_in_menu`=NULL":"`display_in_menu`='".addslashes($_REQUEST['display_in_menu'])."'";
 
 			if(count($set)>0)
 			{
@@ -827,6 +926,11 @@ $set[] = is_null($_REQUEST['txt'])?"`txt`=NULL":"`txt`='".addslashes($_REQUEST['
 	{
 		$filters = [];
 		
+		if(isset2($_REQUEST['display_in_menu_filter']))
+		{
+			$filters[] = "`display_in_menu` = '{$_REQUEST['display_in_menu_filter']}'";
+		}
+				
 
 		$filter="";
 		if(count($filters)>0)
@@ -846,8 +950,30 @@ $set[] = is_null($_REQUEST['txt'])?"`txt`=NULL":"`txt`='".addslashes($_REQUEST['
 
 	function filter_divs()
 	{
+		$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
+			$display_in_menu_values_text = "";
+			foreach(json_decode($display_in_menu_values, true) as $opt)
+			{
+			  $display_in_menu_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+			}
+				  
 		
-		
+		$text_option = array_filter(json_decode($display_in_menu_values, true), function($i)
+		{
+			return $i['value']==$_REQUEST['display_in_menu_filter'];
+		});
+		$text_option = array_values($text_option)[0]['text'];
+		if(isset2($_REQUEST['display_in_menu_filter']))
+		{
+			$filter_divs .= "
+			<div class='filter-tag'>
+					<input type='hidden' class='filter' name='display_in_menu_filter' value='{$_REQUEST['display_in_menu_filter']}'>
+					<span class='fa fa-times remove-tag'></span> Отображать в меню: <b>{$text_option}</b>
+			</div>";
+
+			$filter_caption = "Фильтры: ";
+		}
+				
 		$show = $filter_caption.$filter_divs;
 
 		return $show;

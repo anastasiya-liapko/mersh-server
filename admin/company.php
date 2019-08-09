@@ -106,7 +106,7 @@
 						<div class="form-group">
 							<label class="control-label" for="textinput">Изображение</label>
 							<div class="">
-								<img src="'.$item["img"].'" style="max-width:200px; max-height:200px;" /><br/><br/><label for="img" class="file"> Выберите изображение <input type="file" name="img" id="img" /></label></div>
+								<img src="'.$item["img"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="img" class="file"> Выберите изображение <input type="file" name="img" id="img" /></label></div>
 						</div>
 
 					
@@ -165,6 +165,7 @@ $set[] = is_null($_REQUEST['txt'])?"`txt`=NULL":"`txt`='".addslashes($_REQUEST['
 										$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($img['name']).$ext;
 										if(move_uploaded_file($img['tmp_name'], $target_file))
 		                {
+											compressImage($target_file);
 										    $set[] = "`img`='".("/uploads/".$tm."_".md5($img['name'])).$ext."'";
 		                }
 		                else

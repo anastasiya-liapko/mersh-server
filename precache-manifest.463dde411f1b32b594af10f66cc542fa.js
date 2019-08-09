@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "35425c2c0dd26aab21d5",
+    "revision": "183e7d84c8f02e4626c9",
     "url": "/css/app.91cddcd1.css"
   },
   {
-    "revision": "35425c2c0dd26aab21d5",
-    "url": "/js/app.db1a0fea.js"
+    "revision": "183e7d84c8f02e4626c9",
+    "url": "/js/app.f8ccd7f6.js"
   },
   {
     "revision": "ab02125c0533e0236cef",
@@ -116,12 +116,12 @@ self.__precacheManifest = [
     "url": "/js/chunk-vendors.2c31a87a.js"
   },
   {
-    "revision": "95b566324597a9e0f7f99ffe549e30a1",
-    "url": "/fonts/icomoon.95b56632.ttf"
-  },
-  {
     "revision": "863af54aef607b27974f65a0284f895e",
     "url": "/fonts/icomoon.863af54a.woff"
+  },
+  {
+    "revision": "95b566324597a9e0f7f99ffe549e30a1",
+    "url": "/fonts/icomoon.95b56632.ttf"
   },
   {
     "revision": "97e25a14a42fa7865322fd2eb645d47f",
@@ -140,16 +140,8 @@ self.__precacheManifest = [
     "url": "/img/banner.20dc540a.jpg"
   },
   {
-    "revision": "f9fd10c007abfd9eeaaf70f00f1acbd8",
+    "revision": "7ff8c6f7d0e67b5cb94dc0b77ec28199",
     "url": "/index.html"
-  },
-  {
-    "revision": "2e53d41d717068c1261dc37ff16553ab",
-    "url": "/archive/bd.txt"
-  },
-  {
-    "revision": "9f53409c7d6c71175dae5cc9f768850a",
-    "url": "/db.cfg.php"
   },
   {
     "revision": "2df2745049bf7995e63f2a80e352e642",
@@ -164,6 +156,14 @@ self.__precacheManifest = [
     "url": "/functions.php"
   },
   {
+    "revision": "9f53409c7d6c71175dae5cc9f768850a",
+    "url": "/db.cfg.php"
+  },
+  {
+    "revision": "2e53d41d717068c1261dc37ff16553ab",
+    "url": "/archive/bd.txt"
+  },
+  {
     "revision": "7bd647d3daeee6b2f369621ac17da74e",
     "url": "/img/fav.png"
   },
@@ -172,12 +172,12 @@ self.__precacheManifest = [
     "url": "/img/product-placeholder.png"
   },
   {
-    "revision": "2bbe7a383c99d15776dbe2bb29f82400",
-    "url": "/recaptchalib.php"
-  },
-  {
     "revision": "0835401ad741504723c8376678081e0c",
     "url": "/post.php"
+  },
+  {
+    "revision": "2bbe7a383c99d15776dbe2bb29f82400",
+    "url": "/recaptchalib.php"
   },
   {
     "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",

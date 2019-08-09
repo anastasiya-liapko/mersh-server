@@ -925,7 +925,7 @@ $next_order['total_price']='asc';
 			}
 		}
 
-		$sql = "SELECT 1 as stub  FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_7d1e2ff7 WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order";
+		$sql = "SELECT 1 as stub  FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_9175ddfc WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order";
 
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
@@ -990,7 +990,7 @@ $next_order['total_price']='asc';
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if($pagination == 1)
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_7d1e2ff7 WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order LIMIT :start, :limit";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_9175ddfc WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order LIMIT :start, :limit";
 			if(function_exists("processSelectQuery"))
 			{
 				$sql = processSelectQuery($sql);
@@ -1012,7 +1012,7 @@ $next_order['total_price']='asc';
 		}
 		else
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_7d1e2ff7 WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM products) tmp_9175ddfc WHERE value=main_table.product_id) as product_id_text FROM _orders_products_grouped main_table) temp $srch $filter $where $order";
 			if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
 			{
 				echo "<!--SQL DATA {$sql} -->";

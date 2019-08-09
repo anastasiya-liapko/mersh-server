@@ -77,7 +77,37 @@ class InfoApi extends ApiController
 			}			
 		} elseif ($name == 'header'){
 			$banner = q1("SELECT video FROM video_banner WHERE id='1'", []);
-			$arItems = q("SELECT id, name, link, (CASE WHEN parent_id IS NULL THEN '0' ELSE parent_id END) AS parent_id FROM nav", []);
+			$arItems = q("SELECT `id`, `orderby`, `name`, `link`, IFNULL(`parent_id`, '0') AS `parent_id` FROM `nav` WHERE `display_in_menu`='1'  UNION SELECT CONCAT('collection_', `id`) AS `id`, `orderby`, `name`, '' AS `link`, '3' AS `parent_id` FROM `collections` WHERE display_in_menu='1' UNION SELECT CONCAT('category_', `id`) AS `id`, `orderby`, `name`, '' AS `link`, '2' AS `parent_id` FROM `categories` WHERE display_in_menu='1' UNION SELECT CONCAT('article_', `id`) AS `id`, `orderby`, `title` AS `name`, '' AS `link`, '7' AS `parent_id` FROM `articles` WHERE display_in_menu='1' ORDER by `orderby`", []);
+			
+			$i = 0;
+			
+			foreach ($arItems as $item) {
+				
+				if (!is_numeric($item['id'])) {
+					
+					$item['link'] = (string) $item['name']; // преобразуем в строковое значение
+					$item['link'] = strip_tags($item['link']); // убираем HTML-теги
+					$item['link'] = str_replace(array("\n", "\r"), " ", $item['link']); // убираем перевод каретки
+					$item['link'] = preg_replace("/\s+/", ' ', $item['link']); // удаляем повторяющие пробелы
+					$item['link'] = trim($item['link']); // убираем пробелы в начале и конце строки
+					$item['link'] = function_exists('mb_strtolower') ? mb_strtolower($item['link']) : strtolower($item['link']); // переводим строку в нижний регистр (иногда надо задать локаль)
+					$item['link'] = preg_replace('/[^ a-zа-яё\d]/ui', '',$item['link']); // очищаем строку от недопустимых символов
+					$item['link'] = str_replace(" ", "-", $item['link']); // заменяем пробелы знаком минус
+					
+					
+					$arItems[$i]['link'] = $item['link'];
+					
+					if ($item['parent_id'] == '2') {
+						$arItems[$i]['link'] = "/категория/".$arItems[$i]['link'];
+					} elseif ($item['parent_id'] == '3') {
+						$arItems[$i]['link'] = "/коллекция/".$arItems[$i]['link'];
+					} elseif ($item['parent_id'] == '7') {
+						$arItems[$i]['link'] = "/статья/".$arItems[$i]['link'];
+					}
+				}
+				
+				$i++;
+			}
 			
 			if($arItems || $banner){
 			

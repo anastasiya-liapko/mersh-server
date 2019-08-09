@@ -639,6 +639,7 @@ $is_visible_values = '[{"text":"Да", "value":"1"},
 									$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($content['name']).$ext;
 									if(move_uploaded_file($content['tmp_name'], $target_file))
 	                {
+										compressImage($target_file);
 									    $content = "/uploads/".$tm."_".md5($content['name']).$ext;
 	                }
 	                else
@@ -712,6 +713,7 @@ $product_id = $_REQUEST['product_id'];
 										$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($content['name']).$ext;
 										if(move_uploaded_file($content['tmp_name'], $target_file))
 		                {
+											compressImage($target_file);
 										    $set[] = "`content`='".("/uploads/".$tm."_".md5($content['name'])).$ext."'";
 		                }
 		                else

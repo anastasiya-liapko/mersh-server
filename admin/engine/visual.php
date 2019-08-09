@@ -181,9 +181,9 @@ function renderAuth() // окошко авторизации
         </div>
         <div class="col-md-7 right-col">
           <div class="form">
-          	<div class="logo-form">
-            '.($logo!=""?'<img src="'.$logo.'" alt="logo">':"").'
-            </div>
+
+            '.($logo!=""?'<div class="logo-form"><img src="'.$logo.'" alt="logo"></div>':"").'
+
 			<h3>Авторизация</h3>
             <form id="login" novalidate method="POST">
 							<div class="input-group">

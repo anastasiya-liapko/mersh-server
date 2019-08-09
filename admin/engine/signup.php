@@ -91,9 +91,9 @@ function renderSignupOne($signup_error="")
 		</div>
 		<div class="col-md-7 right-col">
 		  <div class="form">
-			<div class="logo-form">
-			'.($logo!=""?'<img src="'.$logo.'" alt="logo">':"").'
-			</div>
+
+			'.($logo!=""?'<div class="logo-form"><img src="'.$logo.'" alt="logo"></div>':"").'
+
 			<h3>Регистрация</h3>
 			'.($signup_error!=""?'<p style="color: #EA2424; font-size: 12px; text-align: left; position: relative; top: -15px;">'.$signup_error.'</p>':'').'
 			<form id="login" novalidate method="POST">
@@ -420,7 +420,7 @@ function resend($mail)
 	{
 
 		$cur_url = "http".(!empty($_SERVER['HTTPS'])?"s":"")."://".$_SERVER['SERVER_NAME'].explode('?', $_SERVER['REQUEST_URI'], 2)[0]."?code=".md5($users[0][$mysql_user_login]."ajbgFyEaob#gAFp4fK1d".$users[0][$mysql_user_pass]);
-		
+
 
 		$signup_mail_text = "Кликните для завершения регистрации: ".$cur_url;
 		$signup_mail_header = $project_name.": подтверждение электронной почты";

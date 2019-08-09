@@ -1,4 +1,10 @@
 //login.js + concept.js
+//fix for an ugly facebook auth bug
+if (window.location.hash && window.location.hash == '#_=_')
+{
+        window.location.hash = '';
+}
+
 function getYoutubeCode(url)
 {
 
@@ -1057,9 +1063,18 @@ $(document).ready(function()
 	{
 		if(($(e.target).hasClass('genesis-item-property') || e.target.tagName=="TD") && $(e.target).parent().parent().parent().hasClass('table-clickable'))
 		{
-			id = $(this).parent().attr("pk");
-			// openEditModal(id);
-			window.location.hash = '/'+id;
+			if ((typeof nav_menu_filter !== 'undefined')&&(nav_menu_filter==1)) {
+				id = $(this).parent().attr("pk");
+				id = parseInt(id, 10);
+				if (id>9) {
+					// openEditModal(id);
+					window.location.hash = '/'+id;
+				}
+			} else {
+				id = $(this).parent().attr("pk");
+				// openEditModal(id);
+				window.location.hash = '/'+id;
+			}
 		}
 
 	}).children().click(function(e)
@@ -1067,19 +1082,37 @@ $(document).ready(function()
 			e.stopPropagation();
 	});
 
-	id = window.location.hash.replace(/^#\//, '');
-	if(id)
-	{
-		openEditModal(id);
+	if ((typeof nav_menu_filter !== 'undefined')&&(nav_menu_filter==1)) {
+		id = window.location.hash.replace(/^#\//, '');
+		id = parseInt(id, 10);
+		if(id>9)
+		{
+			openEditModal(id);
+		}
+	} else {
+		id = window.location.hash.replace(/^#\//, '');
+		if(id)
+		{
+			openEditModal(id);
+		}
 	}
 
 	$(window).bind('hashchange', function()
 	{
 		$('#edit_modal').modal('hide');
-		id = window.location.hash.replace(/^#\//, '');
-		if(id)
-		{
-			openEditModal(id);
+		if ((typeof nav_menu_filter !== 'undefined')&&(nav_menu_filter==1)) {
+			id = window.location.hash.replace(/^#\//, '');
+			id = parseInt(id, 10);
+			if(id>9)
+			{
+				openEditModal(id);
+			}
+		} else {
+			id = window.location.hash.replace(/^#\//, '');
+			if(id)
+			{
+				openEditModal(id);
+			}
 		}
 	});
 	$(".delete_btn").click(function(e)

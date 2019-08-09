@@ -136,7 +136,7 @@
 						<div class="form-group">
 							<label class="control-label" for="textinput">Изображение карты</label>
 							<div class="">
-								<img src="'.$item["map_img"].'" style="max-width:200px; max-height:200px;" /><label for="map_img" class="file"> Выберите изображение <input type="file" name="map_img" id="map_img" /></label></div>
+								<img src="'.$item["map_img"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="map_img" class="file"> Выберите изображение <input type="file" name="map_img" id="map_img" /></label></div>
 						</div>
 
 					
@@ -198,6 +198,7 @@ $set[] = is_null($_REQUEST['email'])?"`email`=NULL":"`email`='".addslashes($_REQ
 										$target_file = $_SERVER['DOCUMENT_ROOT']."/uploads/".$tm."_".md5($map_img['name']).$ext;
 										if(move_uploaded_file($map_img['tmp_name'], $target_file))
 		                {
+											compressImage($target_file);
 										    $set[] = "`map_img`='".("/uploads/".$tm."_".md5($map_img['name'])).$ext."'";
 		                }
 		                else

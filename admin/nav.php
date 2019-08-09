@@ -32,7 +32,48 @@
 	$action = $_REQUEST['action'];
 	$actions = [];
 
-	
+	// через этот метод проходит HTML каждого tr. Можно например добавить свой столбец. 
+function processTR($html, $item)
+{
+    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    
+    if (in_array($item['id'], $arr_general)) {
+        
+        $html = str_replace("<div class='genesis-control-cell'><a href='#' class='edit_btn'><i class='fa fa-edit' style='color:grey;'></i></a> <a href='#' class='delete_btn'><i class='fa fa-trash' style='color:red;'></i></a></div>", "<div class='genesis-control-cell'></div>", $html);
+        
+    }
+    
+	return $html;
+}
+
+// изменение. Если вернуть false то изменение не произойдет, но никакой ошибки не будет показано. Если хочешь показать ошибку — покажи ее сам при помощи buildMsg();
+function allowUpdate()
+{
+    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    
+    if (in_array($_REQUEST['id'], $arr_general)) {
+        return false;
+    }
+    
+	return true;
+}
+
+function allowDelete()
+{
+    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    
+    if (in_array($_REQUEST['id'], $arr_general)) {
+        return false;
+    }
+    
+    $nav = q("SELECT id FROM nav WHERE parent_id=?", [$_REQUEST['id']]);
+    
+    if (!empty($nav)) {
+        return false;
+    }
+
+	return true;
+}
 
 	define("RPP", 50); //кол-во строк на странице
 
@@ -96,14 +137,21 @@
 	{
 			
    		$parent_id_values = json_encode(q("SELECT name as text, id as value FROM nav", []));
-				$temp = json_decode($parent_id_values, true);
-				array_unshift($temp, ["value"=>"NULL", "text"=>"---------"]);
-				$parent_id_values = json_encode($temp);
-			$parent_id_values_text = "";
-				foreach(json_decode($parent_id_values, true) as $opt)
-				{
-				  $parent_id_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
-				}
+					$temp = json_decode($parent_id_values, true);
+					array_unshift($temp, ["value"=>"NULL", "text"=>"---------"]);
+					$parent_id_values = json_encode($temp);
+				$parent_id_values_text = "";
+					foreach(json_decode($parent_id_values, true) as $opt)
+					{
+					  $parent_id_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+					}
+$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
+			$display_in_menu_values_text = "";
+			foreach(json_decode($display_in_menu_values, true) as $opt)
+			{
+			  $display_in_menu_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+			}
+				  
 
 		list($items, $pagination, $cnt) = get_data();
 
@@ -113,6 +161,7 @@ $next_order['id']='asc';
 $next_order['name']='asc';
 $next_order['link']='asc';
 $next_order['parent_id']='asc';
+$next_order['display_in_menu']='asc';
 
 		if($_REQUEST['sort_order']=='asc')
 		{
@@ -135,7 +184,8 @@ $next_order['parent_id']='asc';
 				{
 					$(\'.big-icon\').html(\'<i class="fas fa-bars"></i>\');
 				};
-
+					
+				var nav_menu_filter = 1;
 
 		</script>
 		
@@ -243,6 +293,26 @@ $next_order['parent_id']='asc';
 			</span>
 				</nobr>
 			</div>
+
+			<div class="genesis-header-property">
+				<nobr>
+					<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>Отображать в меню'. $sort_icon['display_in_menu'].'</a>
+					
+			<span class=\'fa fa-filter filter btn btn-default\' data-placement=\'bottom\' data-content=\'<div class="input-group">
+							<select class="form-control filter-select" name="display_in_menu_filter">
+
+
+							'.str_replace(chr(39), '&#39;', $display_in_menu_values_text).'
+
+
+							</select>
+							<span class="input-group-btn">
+								<button class="btn btn-primary add-filter" type="button"><span class="fa fa-filter"></a></button>
+							</span>
+						</div>\'>
+			</span>
+				</nobr>
+			</div>
 					<div class="genesis-header-property"></div>
 				</div>
 		</div>
@@ -269,36 +339,24 @@ $next_order['parent_id']='asc';
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=id&sort_order='. ($next_order['id']) .'\' class=\'sort\' column=\'id\' sort_order=\''.$sort_order['id'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['id'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>ID:</span>
 		</span>".htmlspecialchars($item['id'])."</div>")."
-".(function_exists("processTD")?processTD("
-	<div class='genesis-item-property '>
+".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
 		<span class='genesis-attached-column-info'>
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=name&sort_order='. ($next_order['name']) .'\' class=\'sort\' column=\'name\' sort_order=\''.$sort_order['name'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['name'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Название:</span>
-		</span>
-		<span class='editable' data-placeholder='' data-inp='text' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='name'>".htmlspecialchars($item['name'])."</span>
-	</div>", $item, "Название"):"
-	<div class='genesis-item-property '>
+		</span>".htmlspecialchars($item['name'])."</div>", $item, "Название"):"<div class='genesis-item-property '>
 		<span class='genesis-attached-column-info'>
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=name&sort_order='. ($next_order['name']) .'\' class=\'sort\' column=\'name\' sort_order=\''.$sort_order['name'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['name'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Название:</span>
-		</span>
-		<span class='editable' data-placeholder='' data-inp='text' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='name'>".htmlspecialchars($item['name'])."</span>
-	</div>")."
-".(function_exists("processTD")?processTD("
-	<div class='genesis-item-property '>
+		</span>".htmlspecialchars($item['name'])."</div>")."
+".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
 		<span class='genesis-attached-column-info'>
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=link&sort_order='. ($next_order['link']) .'\' class=\'sort\' column=\'link\' sort_order=\''.$sort_order['link'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['link'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Ссылка:</span>
-		</span>
-		<span class='editable' data-placeholder='' data-inp='text' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='link'>".htmlspecialchars($item['link'])."</span>
-	</div>", $item, "Ссылка"):"
-	<div class='genesis-item-property '>
+		</span>".htmlspecialchars($item['link'])."</div>", $item, "Ссылка"):"<div class='genesis-item-property '>
 		<span class='genesis-attached-column-info'>
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=link&sort_order='. ($next_order['link']) .'\' class=\'sort\' column=\'link\' sort_order=\''.$sort_order['link'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['link'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Ссылка:</span>
-		</span>
-		<span class='editable' data-placeholder='' data-inp='text' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='link'>".htmlspecialchars($item['link'])."</span>
-	</div>")."
+		</span>".htmlspecialchars($item['link'])."</div>")."
 ".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
 				<span class='genesis-attached-column-info'>
 					<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=parent_id&sort_order='. ($next_order['parent_id']) .'\' class=\'sort\' column=\'parent_id\' sort_order=\''.$sort_order['parent_id'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['parent_id'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
@@ -316,7 +374,8 @@ $next_order['parent_id']='asc';
 						</div>'>
 			</span></span>
 					<span class='genesis-attached-column-name'>Родительский пункт меню:</span>
-				</span><span class='editable' data-inp='select' data-type='select' data-source='".htmlspecialchars($parent_id_values, ENT_QUOTES, 'UTF-8')."' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='parent_id'>".select_mapping($parent_id_values, $item['parent_id'])."</span></div>", $item, "Родительский пункт меню"):"<div class='genesis-item-property '>
+				</span>
+				<span >".$item['parent_id_text']."</div>", $item, "Родительский пункт меню"):"<div class='genesis-item-property '>
 				<span class='genesis-attached-column-info'>
 					<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=parent_id&sort_order='. ($next_order['parent_id']) .'\' class=\'sort\' column=\'parent_id\' sort_order=\''.$sort_order['parent_id'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['parent_id'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
 			<span class='fa fa-filter filter ' data-placement='bottom' data-content='<div class=\"input-group\">
@@ -333,7 +392,43 @@ $next_order['parent_id']='asc';
 						</div>'>
 			</span></span>
 					<span class='genesis-attached-column-name'>Родительский пункт меню:</span>
-				</span><span class='editable' data-inp='select' data-type='select' data-source='".htmlspecialchars($parent_id_values, ENT_QUOTES, 'UTF-8')."' data-url='engine/ajax.php?action=editable&table=nav' data-pk='{$item['id']}' data-name='parent_id'>".select_mapping($parent_id_values, $item['parent_id'])."</span></div>")."
+				</span>
+				<span >".$item['parent_id_text']."</div>")."
+".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
+		<span class='genesis-attached-column-info'>
+			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['display_in_menu'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
+			<span class='fa fa-filter filter ' data-placement='bottom' data-content='<div class=\"input-group\">
+							<select class=\"form-control filter-select\" name=\"display_in_menu_filter\">
+
+
+							".str_replace(chr(39), '&#39;', $display_in_menu_values_text)."
+
+
+							</select>
+							<span class=\"input-group-btn\">
+								<button class=\"btn btn-primary add-filter\" type=\"button\"><span class=\"fa fa-filter\"></a></button>
+							</span>
+						</div>'>
+			</span></span>
+			<span class='genesis-attached-column-name'>Отображать в меню:</span>
+		</span> <span class=''>".renderRadioGroup("display_in_menu", $display_in_menu_values, "nav", $item['id'], $item['display_in_menu'])."</div>", $item, "Отображать в меню"):"<div class='genesis-item-property '>
+		<span class='genesis-attached-column-info'>
+			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=display_in_menu&sort_order='. ($next_order['display_in_menu']) .'\' class=\'sort\' column=\'display_in_menu\' sort_order=\''.$sort_order['display_in_menu'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['display_in_menu'] ?? '<span class="fa fa-sort"></span>')).'</a>'."
+			<span class='fa fa-filter filter ' data-placement='bottom' data-content='<div class=\"input-group\">
+							<select class=\"form-control filter-select\" name=\"display_in_menu_filter\">
+
+
+							".str_replace(chr(39), '&#39;', $display_in_menu_values_text)."
+
+
+							</select>
+							<span class=\"input-group-btn\">
+								<button class=\"btn btn-primary add-filter\" type=\"button\"><span class=\"fa fa-filter\"></a></button>
+							</span>
+						</div>'>
+			</span></span>
+			<span class='genesis-attached-column-name'>Отображать в меню:</span>
+		</span> <span class=''>".renderRadioGroup("display_in_menu", $display_in_menu_values, "nav", $item['id'], $item['display_in_menu'])."</div>")."
 					<div class='genesis-control-cell'><a href='#' class='edit_btn'><i class='fa fa-edit' style='color:grey;'></i></a> <a href='#' class='delete_btn'><i class='fa fa-trash' style='color:red;'></i></a></div>
 				</div>";
 
@@ -827,6 +922,12 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 		}
 				
 
+		if(isset2($_REQUEST['display_in_menu_filter']))
+		{
+			$filters[] = "`display_in_menu` = '{$_REQUEST['display_in_menu_filter']}'";
+		}
+				
+
 		$filter="";
 		if(count($filters)>0)
 		{
@@ -846,14 +947,21 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 	function filter_divs()
 	{
 		$parent_id_values = json_encode(q("SELECT name as text, id as value FROM nav", []));
-				$temp = json_decode($parent_id_values, true);
-				array_unshift($temp, ["value"=>"NULL", "text"=>"---------"]);
-				$parent_id_values = json_encode($temp);
-			$parent_id_values_text = "";
-				foreach(json_decode($parent_id_values, true) as $opt)
-				{
-				  $parent_id_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
-				}
+					$temp = json_decode($parent_id_values, true);
+					array_unshift($temp, ["value"=>"NULL", "text"=>"---------"]);
+					$parent_id_values = json_encode($temp);
+				$parent_id_values_text = "";
+					foreach(json_decode($parent_id_values, true) as $opt)
+					{
+					  $parent_id_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+					}
+$display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "value":"0"}]';
+			$display_in_menu_values_text = "";
+			foreach(json_decode($display_in_menu_values, true) as $opt)
+			{
+			  $display_in_menu_values_text.="<option value=\"{$opt['value']}\">{$opt['text']}</option>";
+			}
+				  
 		
 		$text_option = array_filter(json_decode($parent_id_values, true), function($i)
 		{
@@ -866,6 +974,23 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 			<div class='filter-tag'>
 					<input type='hidden' class='filter' name='parent_id_filter' value='{$_REQUEST['parent_id_filter']}'>
 					<span class='fa fa-times remove-tag'></span> Родительский пункт меню: <b>{$text_option}</b>
+			</div>";
+
+			$filter_caption = "Фильтры: ";
+		}
+				
+
+		$text_option = array_filter(json_decode($display_in_menu_values, true), function($i)
+		{
+			return $i['value']==$_REQUEST['display_in_menu_filter'];
+		});
+		$text_option = array_values($text_option)[0]['text'];
+		if(isset2($_REQUEST['display_in_menu_filter']))
+		{
+			$filter_divs .= "
+			<div class='filter-tag'>
+					<input type='hidden' class='filter' name='display_in_menu_filter' value='{$_REQUEST['display_in_menu_filter']}'>
+					<span class='fa fa-times remove-tag'></span> Отображать в меню: <b>{$text_option}</b>
 			</div>";
 
 			$filter_caption = "Фильтры: ";
@@ -898,7 +1023,7 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 			}
 		}
 
-		$sql = "SELECT 1 as stub  FROM (SELECT main_table.*  FROM nav main_table) temp $srch $filter $where $order";
+		$sql = "SELECT 1 as stub  FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
 
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
@@ -963,7 +1088,7 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if($pagination == 1)
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.*  FROM nav main_table) temp $srch $filter $where $order LIMIT :start, :limit";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order LIMIT :start, :limit";
 			if(function_exists("processSelectQuery"))
 			{
 				$sql = processSelectQuery($sql);
@@ -985,7 +1110,7 @@ $set[] = is_null($_REQUEST['parent_id'])?"`parent_id`=NULL":"`parent_id`='".adds
 		}
 		else
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.*  FROM nav main_table) temp $srch $filter $where $order";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
 			if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
 			{
 				echo "<!--SQL DATA {$sql} -->";
