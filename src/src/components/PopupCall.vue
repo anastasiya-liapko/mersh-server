@@ -122,6 +122,9 @@ export default {
           console.log(response)
           self.showMessage(1)
           self.resetForm()
+          setTimeout(function () {
+            $('#' + self.id).modal('hide')
+          }, 1200)
         })
         .catch(function (error) {
           console.log(error)

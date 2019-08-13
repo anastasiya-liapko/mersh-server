@@ -196,6 +196,9 @@ export default {
           self.resetForm()
           self.$refs.recaptcha.reset()
           self.recaptcha = false
+          setTimeout(function () {
+            $('#' + self.id).modal('hide')
+          }, 1200)
         })
         .catch(function (error) {
           console.log(error)
