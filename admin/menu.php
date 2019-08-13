@@ -189,6 +189,17 @@
   ),
   17 => 
   array (
+    'name' => 'Слайдер на главной',
+    'icon' => 'images',
+    'link' => 'main_slider.php',
+    'roles' => '',
+    'visible' => 1,
+    'group' => 'Настройки',
+    'menu_sort_order' => '10',
+    'unauthorized_access' => '0',
+  ),
+  18 => 
+  array (
     'name' => 'Социальные сети',
     'icon' => 'share-alt',
     'link' => 'social_links.php',
@@ -198,7 +209,7 @@
     'menu_sort_order' => '10',
     'unauthorized_access' => '0',
   ),
-  18 => 
+  19 => 
   array (
     'name' => 'Способы доставки',
     'icon' => 'people-carry',
@@ -209,7 +220,7 @@
     'menu_sort_order' => '10',
     'unauthorized_access' => '0',
   ),
-  19 => 
+  20 => 
   array (
     'name' => 'Товары',
     'icon' => 'cubes',
@@ -220,7 +231,7 @@
     'menu_sort_order' => '10',
     'unauthorized_access' => '0',
   ),
-  20 => 
+  21 => 
   array (
     'name' => 'Товары заказа {{?order_id}}',
     'icon' => 'star',
@@ -231,7 +242,7 @@
     'menu_sort_order' => '10',
     'unauthorized_access' => '0',
   ),
-  21 => 
+  22 => 
   array (
     'name' => 'Категории',
     'icon' => 'gem',
@@ -242,7 +253,7 @@
     'menu_sort_order' => '11',
     'unauthorized_access' => '0',
   ),
-  22 => 
+  23 => 
   array (
     'name' => 'Коллекции',
     'icon' => 'heart',
@@ -253,7 +264,7 @@
     'menu_sort_order' => '11',
     'unauthorized_access' => '0',
   ),
-  23 => 
+  24 => 
   array (
     'name' => 'Статьи',
     'icon' => 'newspaper',
@@ -264,7 +275,7 @@
     'menu_sort_order' => '11',
     'unauthorized_access' => '0',
   ),
-  24 => 
+  25 => 
   array (
     'name' => 'Индивидуальные заказы',
     'icon' => 'user-check',
@@ -275,7 +286,7 @@
     'menu_sort_order' => '15',
     'unauthorized_access' => '0',
   ),
-  25 => 
+  26 => 
   array (
     'name' => 'Обратный звонок',
     'icon' => 'phone',
@@ -325,6 +336,9 @@
 
 	$auth_google = 0; 
 
+	$menu_search_field = 0; 
+
+
 
 	$vk_client_id = '7072037'; 
 
@@ -358,4 +372,4 @@
 
 	$tinypng_key = ''; 
 
-	$generation_date = '2019-08-09'; 
+	$generation_date = '2019-08-13'; 

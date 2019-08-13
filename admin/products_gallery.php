@@ -249,7 +249,7 @@ $next_order['is_visible']='asc';
 				} else {
 					
 					$media_file = "<img class='genesis-image' src='".($item['content']?$item['content']:"style/placeholder.jpg")."'  />";
-					
+					$media_file = ($item['content']?"<a href='#' data-featherlight='{$item['content']}'>":"") .$media_file. ($item['content']?"</a>":"");
 				}
 				
 				$tr = "
@@ -261,13 +261,13 @@ $next_order['is_visible']='asc';
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=content&sort_order='. ($next_order['content']) .'\' class=\'sort\' column=\'content\' sort_order=\''.$sort_order['content'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['content'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Медиафайл:</span>
 		</span>
-					". ($item['content']?"<a href='#' data-featherlight='{$item['content']}'>":"") .$media_file. ($item['content']?"</a>":"") ."
+					".$media_file."
 				</div>", $item, "Медиафайл"):"<div class='genesis-item-property ' style='text-align: center;'>
 		<span class='genesis-attached-column-info'>
 			<span class='buttons-panel'>".'<a href=\'?'.get_query().'&srch-term='.$_REQUEST['srch-term'].'&sort_by=content&sort_order='. ($next_order['content']) .'\' class=\'sort\' column=\'content\' sort_order=\''.$sort_order['content'].'\'>'. (str_replace('style="margin-left:5px;"','',$sort_icon['content'] ?? '<span class="fa fa-sort"></span>')).'</a>'."</span>
 			<span class='genesis-attached-column-name'>Медиафайл:</span>
 		</span>
-					". ($item['content']?"<a href='#' data-featherlight='{$item['content']}'>":"") .$media_file. ($item['content']?"</a>":"") ."
+					".$media_file."
 				</div>")."
 ".(function_exists("processTD")?processTD("<div class='genesis-item-property '>
 		<span class='genesis-attached-column-info'>
@@ -345,6 +345,16 @@ $next_order['is_visible']='asc';
 $is_visible_values = '[{"text":"Да", "value":"1"},
 {"text":"Нет", "value":"0"}]';
 
+		if ($item['is_video'] == '1') {
+			
+			$media_file = "<video style='max-width:200px; max-height:200px;' controls><source src='".$item["content"]."'></video><br/><br/>";
+			
+		} else {
+			
+			$media_file = "<img style='max-width:200px; max-height:200px;' class='genesis-image' src='".($item['content']?$item['content']:"style/placeholder.jpg")."'  /><br/><br/>";
+			
+		}
+
 		$html = '
 			<form class="form" enctype="multipart/form-data" method="POST">
 				<fieldset>'.
@@ -361,7 +371,7 @@ $is_visible_values = '[{"text":"Да", "value":"1"},
 						<div class="form-group">
 							<label class="control-label" for="textinput">Медиафайл</label>
 							<div class="">
-								<img src="'.$item["content"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="content" class="file"> Выберите изображение <input type="file" name="content" id="content" /></label></div>
+								'.$media_file.'<label for="content" class="file"> Выберите медиафайл <input type="file" name="content" id="content" /></label></div>
 						</div>
 
 					
@@ -421,7 +431,7 @@ $is_visible_values = '[{"text":"Да", "value":"1"},
 						<div class="form-group">
 							<label class="control-label" for="textinput">Медиафайл</label>
 							<div class="">
-								<img src="'.$item["content"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="content" class="file"> Выберите изображение <input type="file" name="content" id="content" /></label></div>
+								<img src="'.$item["content"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="content" class="file"> Выберите медиафайл <input type="file" name="content" id="content" /></label></div>
 						</div>
 
 					
@@ -501,7 +511,7 @@ $is_visible_values = '[{"text":"Да", "value":"1"},
 						<div class="form-group">
 							<label class="control-label" for="textinput">Медиафайл</label>
 							<div class="">
-								<img src="'.$item["content"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="content" class="file"> Выберите изображение <input type="file" name="content" id="content" /></label></div>
+								<img src="'.$item["content"].'" class="genesis-image" style="max-width:200px; max-height:200px;" /><label for="content" class="file"> Выберите медиафайл <input type="file" name="content" id="content" /></label></div>
 						</div>
 
 					

@@ -145,7 +145,7 @@ export default {
 
       axios.get(context.domen + '/api/info/header')
         .then(res => {
-          console.log(res)
+          // console.log(res)
           context.nav = res.data.nav
           // context.getCategoriesChildren(res.data.nav)
         })

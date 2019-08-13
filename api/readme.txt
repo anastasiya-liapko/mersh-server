@@ -24,7 +24,7 @@ http://ДОМЕН/api/product/[id]/
 
 http://ДОМЕН/api/info/[infoName]
 
-infoName: [main, about, contacts, privacy, services, lookbook, header, articles, article, social]
+infoName: [main, about, contacts, privacy, services, lookbook, header, articles, article, social, slider]
 
 Для infoName=article нужно передавать еще и id, например, так:
 http://ДОМЕН/api/info/article/1/

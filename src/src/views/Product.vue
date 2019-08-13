@@ -48,7 +48,7 @@
               </i>
               <i
                 class="product-slider__sound fas fa-volume-up d-flex align-items-center justify-content-start"
-                v-if="image.is_video === 0 && !showMute"
+                v-if="image.is_video === 1 && !showMute"
                 @click="showMute = !showMute">
               </i>
             </div>

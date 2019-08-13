@@ -614,6 +614,7 @@ p
     // font-size: 25px
     font-size: 1.302vw
     color: $color-white
+    text-shadow: 1px 1px 2px black
 
 @keyframes fadeInDown
   from

@@ -898,16 +898,16 @@ $next_order['msg']='asc';
 
 		          
 
+		          <div class="form-group not-editable">
+		            <label class="control-label" for="textinput">Дата</label>
+		            <div>
+		            <p>
+		              '.$item["dt"].'
+		            </p>
+		            </div>
+		          </div>
 
-					<div class="form-group">
-						<label class="control-label" for="textinput">Дата</label>
-						<div>
-							<input autocomplete="off" id="dt" placeholder="" name="dt" type="hidden" class="form-control datepicker " disabled data-timepicker="1"  data-format="Y-m-d H:i" value="'.(isset($item["dt"])?((new DateTime($item["dt"]))->format("Y-m-d H:i")):date("Y-m-d H:i")).'"/>
-						<span>'.(isset($item["dt"])?((new DateTime($item["dt"]))->format("Y-m-d H:i")):date("Y-m-d H:i")).'</span>
-						</div>
-					</div>
-
-				
+		          
 
 
 
@@ -1119,15 +1119,16 @@ $next_order['msg']='asc';
 
 		          
 
+		          <div class="form-group not-editable">
+		            <label class="control-label" for="textinput">Дата</label>
+		            <div>
+		            <p>
+		              '.$item["dt"].'
+		            </p>
+		            </div>
+		          </div>
 
-					<div class="form-group">
-						<label class="control-label" for="textinput">Дата</label>
-						<div>
-							<input autocomplete="off" id="dt" placeholder="" name="dt" type="text" class="form-control datepicker " disabled data-timepicker="1"  data-format="Y-m-d H:i" value="'.(isset($item["dt"])?((new DateTime($item["dt"]))->format("Y-m-d H:i")):date("Y-m-d H:i")).'"/>
-						</div>
-					</div>
-
-				
+		          
 
 
 
@@ -1381,8 +1382,7 @@ $next_order['msg']='asc';
 			$id = $_REQUEST['id'];
 			$set = [];
 
-			$set[] = is_null($_REQUEST['dt'])?"`dt`=NULL":"`dt`='".addslashes($_REQUEST['dt'])."'";
-$set[] = is_null($_REQUEST['status'])?"`status`=NULL":"`status`='".addslashes($_REQUEST['status'])."'";
+			$set[] = is_null($_REQUEST['status'])?"`status`=NULL":"`status`='".addslashes($_REQUEST['status'])."'";
 $set[] = is_null($_REQUEST['is_paid'])?"`is_paid`=NULL":"`is_paid`='".addslashes($_REQUEST['is_paid'])."'";
 $set[] = is_null($_REQUEST['name'])?"`name`=NULL":"`name`='".addslashes($_REQUEST['name'])."'";
 $set[] = is_null($_REQUEST['email'])?"`email`=NULL":"`email`='".addslashes($_REQUEST['email'])."'";

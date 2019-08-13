@@ -156,6 +156,11 @@ class InfoApi extends ApiController
 			if($social_links){
 				return $this->response($social_links, 200);
 			}			
+		} elseif ($name == 'slider'){
+			$main_slider = q("SELECT * FROM main_slider WHERE is_visible='1' ORDER BY is_video, orderby",[]);	
+			if($main_slider){
+				return $this->response($main_slider, 200);
+			}			
 		}
         return $this->response('Data not found', 404);
     }

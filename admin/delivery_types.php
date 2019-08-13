@@ -914,4 +914,4 @@ $set[] = is_null($_REQUEST['is_visible'])?"`is_visible`=NULL":"`is_visible`='".a
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Способы доставки", $content, 18);
+	echo masterRender("Способы доставки", $content, 19);

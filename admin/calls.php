@@ -961,4 +961,4 @@ $next_order['is_processed']='asc';
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Обратный звонок", $content, 25);
+	echo masterRender("Обратный звонок", $content, 26);

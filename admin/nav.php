@@ -35,42 +35,42 @@
 	// через этот метод проходит HTML каждого tr. Можно например добавить свой столбец. 
 function processTR($html, $item)
 {
-    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    
-    if (in_array($item['id'], $arr_general)) {
-        
-        $html = str_replace("<div class='genesis-control-cell'><a href='#' class='edit_btn'><i class='fa fa-edit' style='color:grey;'></i></a> <a href='#' class='delete_btn'><i class='fa fa-trash' style='color:red;'></i></a></div>", "<div class='genesis-control-cell'></div>", $html);
-        
-    }
-    
+ $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+ 
+ if (in_array($item['id'], $arr_general)) {
+ 
+ $html = str_replace("<div class='genesis-control-cell'><a href='#' class='edit_btn'><i class='fa fa-edit' style='color:grey;'></i></a> <a href='#' class='delete_btn'><i class='fa fa-trash' style='color:red;'></i></a></div>", "<div class='genesis-control-cell'></div>", $html);
+ 
+ }
+ 
 	return $html;
 }
 
 // изменение. Если вернуть false то изменение не произойдет, но никакой ошибки не будет показано. Если хочешь показать ошибку — покажи ее сам при помощи buildMsg();
 function allowUpdate()
 {
-    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    
-    if (in_array($_REQUEST['id'], $arr_general)) {
-        return false;
-    }
-    
+ $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+ 
+ if (in_array($_REQUEST['id'], $arr_general)) {
+ return false;
+ }
+ 
 	return true;
 }
 
 function allowDelete()
 {
-    $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    
-    if (in_array($_REQUEST['id'], $arr_general)) {
-        return false;
-    }
-    
-    $nav = q("SELECT id FROM nav WHERE parent_id=?", [$_REQUEST['id']]);
-    
-    if (!empty($nav)) {
-        return false;
-    }
+ $arr_general = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+ 
+ if (in_array($_REQUEST['id'], $arr_general)) {
+ return false;
+ }
+ 
+ $nav = q("SELECT id FROM nav WHERE parent_id=?", [$_REQUEST['id']]);
+ 
+ if (!empty($nav)) {
+ return false;
+ }
 
 	return true;
 }
@@ -1023,7 +1023,7 @@ $display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "valu
 			}
 		}
 
-		$sql = "SELECT 1 as stub  FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
+		$sql = "SELECT 1 as stub  FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_a1f35e4b WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
 
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
@@ -1088,7 +1088,7 @@ $display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "valu
 		$debug = (isset($_REQUEST['alef_debug']) && $_REQUEST['alef_debug']==1);
 		if($pagination == 1)
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order LIMIT :start, :limit";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT  main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_a1f35e4b WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order LIMIT :start, :limit";
 			if(function_exists("processSelectQuery"))
 			{
 				$sql = processSelectQuery($sql);
@@ -1110,7 +1110,7 @@ $display_in_menu_values = '[{"text":"Да", "value":"1"},{"text":"Нет", "valu
 		}
 		else
 		{
-			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_04868398 WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
+			$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM (SELECT main_table.* , (select text FROM (SELECT name as text, id as value FROM nav) tmp_a1f35e4b WHERE value=main_table.parent_id) as parent_id_text FROM nav main_table) temp $srch $filter $where $order";
 			if(in_array($_SERVER['SERVER_NAME'], ["test-genesis.alef.im", "devtest-genesis.alef.im", "localhost"]) || $debug)
 			{
 				echo "<!--SQL DATA {$sql} -->";

@@ -1036,4 +1036,4 @@ $next_order['is_processed']='asc';
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Индивидуальные заказы", $content, 24);
+	echo masterRender("Индивидуальные заказы", $content, 25);

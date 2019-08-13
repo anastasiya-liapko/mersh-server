@@ -863,4 +863,4 @@ $set[] = is_null($_REQUEST['is_display'])?"`is_display`=NULL":"`is_display`='".a
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Социальные сети", $content, 17);
+	echo masterRender("Социальные сети", $content, 18);

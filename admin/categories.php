@@ -1136,4 +1136,4 @@ $set[] = is_null($_REQUEST['display_in_menu'])?"`display_in_menu`=NULL":"`displa
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Категории", $content, 21);
+	echo masterRender("Категории", $content, 22);

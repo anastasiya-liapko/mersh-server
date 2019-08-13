@@ -181,6 +181,9 @@ export default {
       display: none
     & .info
       flex-wrap: nowrap !important
+    .info__text,
+    .info__icon::before
+      text-shadow: none
     & .info__call
       margin-bottom: 0
     & .info__call,
@@ -202,6 +205,7 @@ export default {
       font-size: calc(1.198vw * 1.4)
     & .info__icon::before,
     & .hamburger__icon::before
+      text-shadow: none
       color: $color-brown
     & .svg-logo_location_header
         .svg-logo__path
@@ -244,6 +248,7 @@ export default {
 .hamburger__icon::before
   // font-size: 30px
   font-size: 1.563vw
+  text-shadow: 1px 1px 2px black
   // transition: color 0.3s linear
 
 .header__logo
@@ -264,6 +269,7 @@ export default {
   font-size: 0.729vw
   line-height: 1
   font-weight: 400
+  text-shadow: 1px 1px 2px black
   color: $color-white
   white-space: nowrap
 
@@ -281,6 +287,7 @@ export default {
   height: 1.823vw
   margin-left: 0.938vw
   &::before
+    text-shadow: 1px 1px 2px black
     // transition: color 0.3s linear
 
 .info__icon_type_call::before
@@ -349,6 +356,13 @@ export default {
 .svg-logo_location_nav
   .svg-logo__path
     fill: $color-brown
+
+.svg-logo_location_header
+  .svg-logo__path
+    stroke: black
+    stroke-width: 0.5px
+    // box-shadow: -5px -5px 5px black
+    filter: drop-shadow( 5px 5px 5px black )
 
 @media(max-width: 1199px)
   .header

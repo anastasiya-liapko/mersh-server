@@ -1691,4 +1691,4 @@ if(isset2($_REQUEST['is_new_filter']))
 	
 
 	$content = $actions[$action]();
-	echo masterRender("Товары", $content, 19);
+	echo masterRender("Товары", $content, 20);
