@@ -116,6 +116,7 @@ export default {
   // letter-spacing: 17.37px
   letter-spacing: 0.905vw
   text-transform: uppercase
+  text-shadow: 1px 1px 2px black
   color: $color-white
   opacity: 1
   filter: blur(0px)
@@ -135,6 +136,7 @@ export default {
   line-height: 1
   font-weight: 700
   text-transform: uppercase
+  text-shadow: 1px 1px 2px black
   color: $color-white
   opacity: 0
   filter: blur(12px)

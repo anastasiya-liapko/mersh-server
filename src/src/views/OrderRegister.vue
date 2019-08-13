@@ -485,6 +485,10 @@ export default {
   color: $color-black
   background-color: transparent
 
+.order-register__input::placeholder,
+.order-register__textarea::placeholder
+  opacity: 0.4
+
 .order-register__label
   margin-bottom: 0
 

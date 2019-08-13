@@ -133,7 +133,7 @@ export default {
     border-bottom: 1px solid $color-text
     border-radius: 0
   .select__toggle_type_placeholder
-    color: rgba(0, 0, 0, 0.7)
+    color: rgba(0, 0, 0, 0.4)
   .select__menu
     // top: calc(68px - 1px)
     top: calc(3.542vw - 1px)
